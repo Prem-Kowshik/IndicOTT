@@ -296,4 +296,3 @@ def extract_movie_info_from_url(url: str) -> Dict[str, str]:
         return info
     except Exception as e:
         return {"error": str(e)}
-    
