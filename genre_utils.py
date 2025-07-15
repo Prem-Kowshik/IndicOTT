@@ -127,13 +127,13 @@ def render_footer():
 
     with st.expander("👥 Team Members"):
         st.markdown("""
-        - [*Prem Koushik*](mailto:)
+        - [*Prem Kowshik*](mailto:premkowshik140306@gmail.com)
         - [*Hemanth Kumar Putha*](mailto:putha.hemanth@gmail.com)  
         - [*Jyothishma Harivilam*](mailto:jyothishma.harivilam@gmail.com)  
         - [*Amar Kumar*](mailto:@gmail.com)  
         - [*Ankan Banerjee*](mailto:ankanb853@gmail.com)  
         - [*Lalithya *](mailto:lalithyamunigala330@gmail.com)  
-        - [*Kotra Keshav Gupta*](mailto:@gmail.com)  
+        - [*Kotra Keshav Gupta*](mailto:saikeshavgupta@gmail.com)  
         - [*Harshit Royal*](mailto:@gmail.com) 
         - [*Soham Mutra*](mailto:sohanmutra28@gmail.com) 
         """, unsafe_allow_html=True)
