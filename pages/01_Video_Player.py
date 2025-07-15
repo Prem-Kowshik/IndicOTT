@@ -21,6 +21,7 @@ import json
 import asyncio
 from datetime import timedelta
 from deep_translator import GoogleTranslator
+from genre_utils import render_footer as rf
 
 # --- Set up import path to utils ---
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -439,3 +440,5 @@ with left:
             
         except Exception as e:
             st.error(f"{_('analysis_parse_error')} {e}")
+
+rf()
