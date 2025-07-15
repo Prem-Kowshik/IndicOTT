@@ -10,6 +10,7 @@ import random
 from utils.translation_utils import LANGUAGES, get_translation, UI_STRINGS, get_all_translations_for_language, get_available_languages
 from utils.keyboard_component import render_multilanguage_keyboard, initialize_keyboard_state
 from testing import return_genres
+from genre_utils import render_footer as rf
 
 def main():
     # Initialize language in session state first
@@ -1204,3 +1205,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+rf()
