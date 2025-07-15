@@ -134,8 +134,6 @@ def render_footer():
         - [*Ankan Banerjee*](mailto:ankanb853@gmail.com)  
         - [*Lalithya *](mailto:lalithyamunigala330@gmail.com)  
         - [*Kotra Keshav Gupta*](mailto:saikeshavgupta@gmail.com)  
-        - [*Harshit Royal*](mailto:@gmail.com) 
-        - [*Soham Mutra*](mailto:sohanmutra28@gmail.com) 
         """, unsafe_allow_html=True)
 
     st.markdown("""
