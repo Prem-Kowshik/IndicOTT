@@ -15,7 +15,73 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 # Page config
 st.set_page_config(page_title="🎬 Movie Index", layout="wide")
-st.title("🎬 Movie Index")
+
+# Inject custom CSS for Netflix theme
+st.markdown("""
+    <style>
+    :root {
+        --primary-red: #e50914;
+        --shadow-red: #e50914;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+# Top Navigation Bar
+top_col1, top_col2 = st.columns([1, 2])
+with top_col1:
+    st.markdown("""
+    <h1 style='margin-top: 0; color: var(--primary-red); text-shadow: 0 0 10px var(--shadow-red);'>
+        🎬 StreamFlix
+    </h1>
+    """, unsafe_allow_html=True)
+
+# Netflix-style CSS for AgGrid Table
+st.markdown("""
+    <style>
+    :root {
+        --primary-red: #e50914;
+        --shadow-red: #e50914;
+    }
+
+    .ag-theme-streamlit {
+        background-color: #141414 !important;
+        --ag-background-color: #141414 !important;
+        --ag-foreground-color: #ffffff !important;
+        --ag-header-background-color: #1f1f1f !important;
+        --ag-header-foreground-color: var(--primary-red) !important;
+        --ag-border-color: #e50914 !important;
+        --ag-row-hover-color: #e5091420 !important;
+        --ag-selected-row-background-color: #e5091430 !important;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .ag-theme-streamlit .ag-header-cell-label {
+        justify-content: center;
+    }
+
+    .ag-theme-streamlit .ag-row {
+        transition: background 0.2s ease-in-out;
+    }
+
+    .ag-theme-streamlit .ag-row-hover {
+        background-color: #e5091420 !important;
+    }
+
+    .ag-theme-streamlit .ag-cell {
+        border-right: 1px solid #e50914 !important;
+    }
+
+    .ag-theme-streamlit .ag-header-cell {
+        border-right: 1px solid #e50914 !important;
+    }
+
+    .ag-theme-streamlit .ag-root-wrapper {
+        border: 2px solid #e50914 !important;
+        border-radius: 10px;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 
 # Predefined options
 STANDARD_GENRES = [
@@ -29,12 +95,28 @@ STANDARD_LANGUAGE = ["English", "Hindi", "Telugu", "Tamil", "Kannada", "Marathi"
 # Fetch all movies
 @st.cache_data(ttl=300)
 def fetch_all_movies():
-    try:
-        response = supabase.table("Video_movies").select("*").execute()
-        return response.data
-    except Exception as e:
-        st.error(f"❌ Error fetching movie data: {e}")
-        return []
+    all_data = []
+    batch_size = 1000
+    offset = 0
+
+    while True:
+        try:
+            response = (
+                supabase.table("Video_movies")
+                .select("*")
+                .range(offset, offset + batch_size - 1)
+                .execute()
+            )
+            batch = response.data
+            if not batch:
+                break
+            all_data.extend(batch)
+            offset += batch_size
+        except Exception as e:
+            st.error(f"❌ Error fetching batch starting at {offset}: {e}")
+            break
+
+    return all_data
 
 movies = fetch_all_movies()
 
