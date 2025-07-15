@@ -4,6 +4,7 @@ import os
 from dotenv import load_dotenv
 import pandas as pd
 from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode
+from genre_utils import render_footer as rf 
 
 # Load Supabase credentials from .env
 load_dotenv()
@@ -34,6 +35,56 @@ with top_col1:
         🎬 StreamFlix
     </h1>
     """, unsafe_allow_html=True)
+
+# Custom styles for sidebar dropdowns
+st.markdown("""
+    <style>
+    /* Sidebar dark background (optional) */
+    [data-testid="stSidebar"] {
+        background-color: #111 !important;
+        color: white !important;
+    }
+
+    /* Glowing red border dropdowns */
+    .stSelectbox > div {
+        background-color: #1f1f1f !important;
+        color: white !important;
+        border: 2px solid #e50914 !important;
+        border-radius: 10px !important;
+        box-shadow: 0 0 8px #e50914 !important;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .stSelectbox:hover > div {
+        box-shadow: 0 0 15px #e50914 !important;
+        transform: scale(1.02);
+    }
+
+    .stSelectbox label {
+        color: #e50914 !important;
+        font-weight: 600;
+    }
+
+    /* Dropdown text and popup */
+    .stSelectbox div[data-baseweb="select"] {
+        background-color: #1f1f1f !important;
+        color: white !important;
+    }
+
+    .stSelectbox div[role="combobox"] {
+        color: white !important;
+    }
+
+    .stSelectbox div[role="listbox"] {
+        background-color: #1f1f1f !important;
+    }
+
+    .stSelectbox div[role="option"] {
+        color: white !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 
 # Netflix-style CSS for AgGrid Table
 st.markdown("""
@@ -81,6 +132,29 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
+
+st.markdown("""
+    <style>
+    button[data-testid="baseButton-download-csv"] {
+        background-color: #e50914;
+        color: white;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        padding: 0.6rem 1.2rem;
+        font-size: 16px;
+        box-shadow: 0 0 10px #e50914;
+        transition: all 0.2s ease-in-out;
+    }
+
+    button[data-testid="baseButton-download-csv"]:hover {
+        background-color: #ff0a16;
+        box-shadow: 0 0 20px #e50914;
+        transform: scale(1.03);
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 
 
 # Predefined options
@@ -149,7 +223,7 @@ if selected_cast != "All":
 
 # Show AgGrid if there are results
 if filtered_movies:
-    st.success(f"🎞 Found {len(filtered_movies)} movie(s).")
+    st.success(f"🎞️ Found {len(filtered_movies)} movie(s).")
 
     # Prepare AgGrid
     gb = GridOptionsBuilder.from_dataframe(pd.DataFrame(filtered_movies))
@@ -158,15 +232,65 @@ if filtered_movies:
     gb.configure_default_column(filterable=True, sortable=True, resizable=True)
     grid_options = gb.build()
 
-    AgGrid(
-        pd.DataFrame(filtered_movies),
-        gridOptions=grid_options,
-        update_mode=GridUpdateMode.NO_UPDATE,
-        fit_columns_on_grid_load=True,
-        theme="streamlit",  # or "streamlit", "alpine"
-        height=500,
-        allow_unsafe_jscode=True,
-        enable_enterprise_modules=False
-    )
+    with st.container():
+        st.markdown("""
+            <div class="netflix-aggrid">
+        """, unsafe_allow_html=True)
+
+        AgGrid(
+            pd.DataFrame(filtered_movies),
+            gridOptions=grid_options,
+            update_mode=GridUpdateMode.NO_UPDATE,
+            fit_columns_on_grid_load=True,
+            theme="streamlit",
+            height=500,
+            allow_unsafe_jscode=True,
+            enable_enterprise_modules=False
+        )
+
+        st.markdown("</div>", unsafe_allow_html=True)
+    # Convert filtered data to DataFrame
+    # Convert filtered data to DataFrame
+    df_filtered = pd.DataFrame(filtered_movies)
+    csv_data = df_filtered.to_csv(index=False).encode('utf-8')
+
+    # CSV download button
+    if st.download_button(
+        label="📥 Download Filtered Movies as CSV",
+        data=csv_data,
+        file_name='Movies_Index.csv',
+        mime='text/csv',
+        key="download-csv",
+        help="Download the currently filtered movies as a CSV file.",
+    ):
+        st.session_state["csv_downloaded"] = True
+
 else:
     st.warning("No movies match the selected filters.")
+
+if st.session_state.get("csv_downloaded"):
+    st.markdown("""
+        <style>
+        .download-success {
+            background-color: #e50914;
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            animation: slideFade 1.2s ease-in-out;
+            margin-top: 1rem;
+        }
+
+        @keyframes slideFade {
+            0% {opacity: 0; transform: translateY(-10px);}
+            50% {opacity: 1; transform: translateY(0);}
+            100% {opacity: 0; transform: translateY(10px);}
+        }
+        </style>
+        <div class="download-success">
+            ✅ CSV downloaded successfully!
+        </div>
+    """, unsafe_allow_html=True)
+
+rf()
+
