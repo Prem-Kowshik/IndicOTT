@@ -23,7 +23,7 @@ from datetime import timedelta
 from deep_translator import GoogleTranslator
 
 # --- Set up import path to utils ---
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(_file_))))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from utils.supabase_client import supabase
 from utils.ai_utils import character_tropes_generator
 
