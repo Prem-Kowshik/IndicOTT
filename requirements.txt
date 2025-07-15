@@ -1,18 +1,16 @@
 torch
-pandas==2.3.0
-requests==2.32.4
-git+https://github.com/openai/whisper.git
-streamlit==1.45.1
 aiohttp==3.12.2
 backoff==2.2.1
 nest_asyncio==1.6.0
-asyncio
+pandas==2.3.1
+protobuf==6.31.1
+python-dotenv==1.1.1
+srt==3.5.3
 streamlit==1.45.1
+supabase==2.16.0
 tenacity==8.5.0
+translate==3.6.1
 google-genai==1.19.0
 google-generativeai==0.8.5
-ffmpeg
-googletrans==4.0.0-rc1
-firebase-admin==6.5.0
-ffmpeg-python==0.2.0
 streamlit-components==0.1.0  # optional, if using custom components
+streamlit-aggrid==1.1.6
