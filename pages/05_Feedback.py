@@ -2,6 +2,7 @@
 import streamlit as st
 import streamlit.components.v1 as components
 import time
+from genre_utils import render_footer as rf
 
 st.set_page_config(page_title="Feedback", layout="centered")
 
@@ -26,3 +27,5 @@ if st.button("I have submitted the feedback form"):
     # For multipage apps on Streamlit v1.22+, use: st.switch_page("Home.py")
     # For external redirect:
     st.switch_page("./Homepage.py")
+
+rf()
