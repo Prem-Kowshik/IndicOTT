@@ -82,3 +82,64 @@ async def main():
     except TypeError:
         print("object not readable")
     return genre    
+
+
+def render_footer():
+    st.markdown("""---""")
+    st.markdown("### 🌐 Connect with Us")
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.markdown("""
+        <div style="text-align: center;">
+            <a href="mailto:reachus@swecha.net">
+                <img src="https://moein.video/wp-content/uploads/2022/12/Gmail-Logo-GIF-Gmail-Icon-GIF-Royalty-Free-Animated-Icon-GIF-1080px-after-effects-project.gif" width="80" />
+            </a>
+            <br/>
+            <a href="mailto:reachus@swecha.net" style="color: #ff4d4d;">Email</a>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col2:
+        st.markdown("""
+        <div style="text-align: center;">
+            <a href="https://instagram.com/swechafsmi" target="_blank">
+                <img src="https://miro.medium.com/v2/resize:fit:1400/1*PPztoHHx7GPXCwTUHMmr4w.gif" width="150" />
+            </a>
+            <br/>
+            <a href="https://instagram.com/swechafsmi" target="_blank" style="color: #e75480;">Instagram</a>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col3:
+        st.markdown("""
+        <div style="text-align: center;">
+            <a href="https://twitter.com/SwechaFSMI" target="_blank">
+                <img src="https://cdn.dribbble.com/userupload/9051959/file/original-006a32a7d1299ce2651e2835f852d90b.gif" width="80" />
+            </a>
+            <br/>
+            <a href="https://twitter.com/SwechaFSMI" target="_blank" style="color: #66ccff;">Twitter</a>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("""---""")
+
+    with st.expander("👥 Team Members"):
+        st.markdown("""
+        - [*Prem Koushik*](mailto:)
+        - [*Hemanth Kumar Putha*](mailto:putha.hemanth@gmail.com)  
+        - [*Jyothishma Harivilam*](mailto:jyothishma.harivilam@gmail.com)  
+        - [*Amar Kumar*](mailto:@gmail.com)  
+        - [*Ankan Banerjee*](mailto:ankanb853@gmail.com)  
+        - [*Lalithya *](mailto:lalithyamunigala330@gmail.com)  
+        - [*Kotra Keshav Gupta*](mailto:@gmail.com)  
+        - [*Harshit Royal*](mailto:@gmail.com) 
+        - [*Soham Mutra*](mailto:sohanmutra28@gmail.com) 
+        """, unsafe_allow_html=True)
+
+    st.markdown("""
+        <p style="text-align:center; font-size:0.8rem; color:gray; margin-top: 2rem;">
+            © 2025 StreamFlix. Built with ❤ by the team. No copyright. Feel free to use with credit.
+        </p>
+    """, unsafe_allow_html=True)
