@@ -177,10 +177,6 @@ with left:
         <source src='{video_url}' type='video/mp4'>
         {vtt_track}
       </video>
-      <div class='speed'>
-        Speed: <select onchange="document.getElementById('v').playbackRate=parseFloat(this.value)">
-          <option>0.25</option><option>0.5</option><option>0.75</option><option selected>1</option>
-          <option>1.25</option><option>1.5</option><option>2</option>
         </select>
       </div>
     </div>
